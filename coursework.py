@@ -16,14 +16,30 @@ data = pd.read_csv("healthcare-dataset-stroke-data.csv").dropna()
 print(data)
 
 # plot avg_glucose_level against bmi
-avg_glucose_level = np.array(data["avg_glucose_level"]).reshape(4909, 1) # X
-bmi = np.array(data["bmi"]).reshape(4909, 1) # y
 
-plt.scatter(avg_glucose_level, bmi, s=0.5)
+# with stroke
+glucose_bmi_stroke = data.loc[data["stroke"] == 1]
+print(glucose_bmi_stroke)
+avg_glucose_level_stroke = np.array(glucose_bmi_stroke["avg_glucose_level"]).reshape(209, 1) # X
+bmi_stroke = np.array(glucose_bmi_stroke["bmi"]).reshape(209, 1) # y
+
+# no stroke
+glucose_bmi_no_stroke = data.loc[data["stroke"] == 0]
+print(glucose_bmi_no_stroke)
+avg_glucose_level_no_stroke = np.array(glucose_bmi_no_stroke["avg_glucose_level"]).reshape(4700, 1) # X
+bmi_no_stroke = np.array(glucose_bmi_no_stroke["bmi"]).reshape(4700, 1) # y
+
+plt.scatter(avg_glucose_level_stroke, bmi_stroke, s=0.5, color="#00ccff")
+plt.scatter(avg_glucose_level_no_stroke, bmi_no_stroke, s=0.05, color="#ff9900")
 plt.title("Correlation between avg_glucose_level and bmi")
 plt.xlabel("avg_glucose_label")
 plt.ylabel("bmi")
+plt.legend(['stroke', 'no stroke'])
 plt.show()
+
+# data to be used for decision tree model
+avg_glucose_level = np.array(data["avg_glucose_level"]).reshape(4909, 1) # X
+bmi = np.array(data["bmi"]).reshape(4909, 1) # y
 
 # decision tree regressor model
 # as values are continuous
@@ -42,14 +58,30 @@ for train_index, validate_index in kf.split(avg_glucose_level, bmi):
     fold += 1
 
 # plot hypertension against age
+
+# with hypertension
+age_hypertension_data = data.loc[data["hypertension"] == 1]
+print(age_hypertension_data)
+age_with_hypertension = np.array(age_hypertension_data["age"]).reshape(451, 1) # X
+with_hypertension = np.array(age_hypertension_data["hypertension"]).reshape(451, 1) # y
+
+# without hypertension
+age_no_hypertension_data = data.loc[data["hypertension"] == 0]
+print(age_no_hypertension_data)
+age_without_hypertension = np.array(age_no_hypertension_data["age"]).reshape(4458, 1) # X
+without_hypertension = np.array(age_no_hypertension_data["hypertension"]).reshape(4458, 1) # y
+
+plt.scatter(age_with_hypertension, with_hypertension, s=0.5, color="#00ccff")
+plt.scatter(age_without_hypertension, without_hypertension, s=0.05, color="#ff9900")
+plt.title("Correlation between age and hypertension")
+plt.xlabel("age")
+plt.ylabel("hypertension")
+plt.legend(['hypertension', 'no hypertension'])
+plt.show()
+
+# data to be used for decision tree model
 age = np.array(data["age"]).reshape(4909, 1) # X
 hypertension = np.array(data["hypertension"]).reshape(4909, 1) # y
-
-plt.scatter(age, hypertension, s=0.5)
-plt.title("Correlation between age and hypertension")
-plt.xlabel('age')
-plt.ylabel('hypertension')
-plt.show()
 
 # decision tree classifier model
 hypertension_age_decision_tree = DecisionTreeClassifier(criterion='entropy')
@@ -68,14 +100,30 @@ hypertension_age_cm = confusion_matrix(hypertension_test, hypertension_pred)
 print(hypertension_age_cm)
 
 # plot heart_disease against age
+
+# with heart_disease
+age_heart_disease_data = data.loc[data["heart_disease"] == 1]
+print(age_heart_disease_data)
+age_with_heart_disease = np.array(age_heart_disease_data["age"]).reshape(243, 1) # X
+with_heart_disease = np.array(age_heart_disease_data["heart_disease"]).reshape(243, 1) # y
+
+# without heart_disease
+age_no_heart_disease_data = data.loc[data["heart_disease"] == 0]
+print(age_no_heart_disease_data)
+age_without_heart_disease = np.array(age_no_heart_disease_data["age"]).reshape(4666, 1) # X
+without_heart_disease = np.array(age_no_heart_disease_data["heart_disease"]).reshape(4666, 1) # y
+
+plt.scatter(age_with_heart_disease, with_heart_disease, s=0.5, color="#00ccff")
+plt.scatter(age_without_heart_disease, without_heart_disease, s=0.05, color="#ff9900")
+plt.title("Correlation between age and heart_disease")
+plt.xlabel("age")
+plt.ylabel("heart_disease")
+plt.legend(['heart disease', 'no heart disease'])
+plt.show()
+
+# data to be used for decision tree model
 age = np.array(data["age"]).reshape(4909, 1) # X
 heart_disease = np.array(data["heart_disease"]).reshape(4909, 1) # y
-
-plt.scatter(age, heart_disease, s=0.5)
-plt.title("Correlation between age and heart_disease")
-plt.xlabel('age')
-plt.ylabel('heart_disease')
-plt.show()
 
 # decision tree classifier model
 heart_disease_age_decision_tree = DecisionTreeClassifier(criterion='entropy')

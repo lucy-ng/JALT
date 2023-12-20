@@ -28,6 +28,8 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
+#Load dataset
+
 data = pd.read_csv('healthcare-dataset-stroke-data.csv')
 
 
@@ -35,15 +37,19 @@ features = ['age', 'hypertension', 'heart_disease']
 X = data[features]
 y = data['stroke']
 
-
+#Creating Linear Regression model and training it 
 model = LinearRegression()
 model.fit(X, y)
 
-
+#Getting coefficients from trained model
 coefficients = model.coef_
 
-plt.figure(figsize=(5, 1))
+#Creating a plot
+#Setting a size of a plot
+plt.figure(figsize=(5, 1)) 
+#Creating horizontal bar
 plt.barh(features, coefficients)
+#Naming x axis
 plt.xlabel('Coefficient Value')
 plt.title('Linear Regression')
 plt.show()

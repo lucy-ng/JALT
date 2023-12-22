@@ -98,6 +98,9 @@ print("Accuracy: %.2f" % hypertension_age_accuracy)
 # confusion matrix
 hypertension_age_cm = confusion_matrix(hypertension_test, hypertension_pred)
 print(hypertension_age_cm)
+hypertension_age_cm_disp = ConfusionMatrixDisplay(hypertension_age_cm, display_labels=["No Hypertension", "Hypertension"])
+hypertension_age_cm_disp.plot()
+plt.show()
 
 # plot heart_disease against age
 
@@ -140,3 +143,6 @@ print("Accuracy: %.2f" % heart_disease_age_accuracy)
 # confusion matrix
 heart_disease_age_cm = confusion_matrix(heart_disease_test, heart_disease_pred)
 print(heart_disease_age_cm)
+heart_disease_age_cm_disp = ConfusionMatrixDisplay(heart_disease_age_cm, display_labels=["No Heart Disease", "Heart Disease"])
+heart_disease_age_cm_disp.plot()
+plt.show()

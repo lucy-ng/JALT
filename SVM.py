@@ -6,13 +6,23 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
 #load the dataset
-dataset = pd.read_csv("healthcare-dataset-stroke-data.csv")
-dataset.tail()
+dataset = pd.read_csv('healthcare-dataset-stroke-data.csv')
+print (dataset)
 
 stroke_dataset = dataset[dataset['stroke']==1]
-stroke1_dataset = dataset[dataset['stroke']==0]
+heart_dataset = dataset[dataset['heart_disease']==1]
 
 axes = stroke_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', color ='blue', label='stroke' )
-stroke1_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', color ='red', label='stroke', ax=axes )
+heart_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', color ='red', label='stroke', ax=axes )
 
-dataset.dtypes
+#Filter dataset to certain columns
+features_dataset = dataset[['heart_disease','avg_glucose_level', 'bmi', 'stroke']]
+
+X = np.asarray(features_dataset)
+
+#Dependent variable
+
+y = np.asarray(dataset['stroke'])
+
+print(X)
+print(y)

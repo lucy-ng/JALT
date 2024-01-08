@@ -22,8 +22,9 @@ def plot_confusion_matrix(cm, names, title='Confusion matrix', cmap=plt.cm.Blues
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
-#load the dataset from sklearn
-iris = datasets.load_iris()
+#load the dataset
+data = pd.read_csv("healthcare-dataset-stroke-data.csv")
+print(data)
 
 #put the iris dataset into a DataFrame
 df = pd.DataFrame(data=np.c_[iris['data'],iris['target']],

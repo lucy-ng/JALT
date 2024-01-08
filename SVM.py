@@ -22,7 +22,7 @@ X = np.asarray(features_dataset)
 
 #Dependent variable
 
-y = np.asarray(dataset['stroke'])
+Y = np.asarray(dataset['stroke'])
 
 print(X)
-print(y)
+print(Y)

@@ -15,11 +15,11 @@ print (dataset)
 stroke_dataset = dataset[dataset['stroke']==1]
 heart_dataset = dataset[dataset['stroke']==1]
 
-axes = stroke_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', color ='blue', label='stroke' )
-heart_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', color ='red', label='stroke', ax=axes )
+axes = stroke_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', color ='blue', label='stroke' )
+heart_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', color ='red', label='stroke', ax=axes )
 
 #Filter dataset to certain columns
-features_dataset = dataset[['heart_disease','avg_glucose_level', 'bmi']]
+features_dataset = dataset[['heart_disease','avg_glucose_level']]
 
 X = np.asarray(features_dataset.values)
 

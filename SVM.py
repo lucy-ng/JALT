@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn import svm
 from sklearn.metrics import classification_report
 from sklearn.impute import SimpleImputer
+from sklearn.metrics import confusion_matrix, accuracy_score
+from matplotlib.colors import ListedColormap
 
 #load the dataset
 dataset = pd.read_csv('healthcare-dataset-stroke-data.csv')
@@ -14,9 +16,9 @@ print (dataset)
 
 stroke_dataset = dataset[dataset['stroke']==1]
 heart_dataset = dataset[dataset['stroke']==1]
-
-axes = stroke_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', color ='blue', label='stroke' )
-heart_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', color ='red', label='stroke', ax=axes )
+    
+axes = stroke_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', label='stroke' )
+heart_dataset.plot(kind='scatter', x='heart_disease', y= 'avg_glucose_level', label='stroke', ax=axes )
 
 #Filter dataset to certain columns
 features_dataset = dataset[['heart_disease','avg_glucose_level']]
@@ -51,4 +53,24 @@ classifier.fit(X_train, y_train)
 
 y_predict = classifier.predict(X_test)
 
-print(classification_report (y_test, y_predict))
+print(classification_report (y_test, y_predict, zero_division=0))
+
+cm = confusion_matrix(y_test, y_predict)
+print(cm)
+accuracy_score(y_test,y_predict)
+
+X_set, y_set = X_test, y_test
+X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
+                     np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+             alpha = 0.75, cmap = ListedColormap(('red', 'green')))
+plt.xlim(X1.min(), X1.max())
+plt.ylim(X2.min(), X2.max())
+for i, j in enumerate(np.unique(y_set)):
+    plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
+                c = [ListedColormap(('red', 'green'))(i)], label = j)
+plt.title('Stroke')
+plt.xlabel('Heart Disease')
+plt.ylabel('Average Glucose Level')
+plt.legend()
+plt.show()

@@ -32,4 +32,12 @@ heart2_dataset = dataset[dataset['stroke']==0]
 axes = stroke2_dataset.plot(kind='density', x='hypertension', y= 'age', label='stroke', color = 'pink' )
 heart2_dataset.plot(kind='density', x='hypertension', y= 'age', label='no stroke', color = 'blue', ax=axes )
 
+#Filter dataset to certain columns
+features_dataset = dataset[['bmi','avg_glucose_level', 'age', 'gender', 'hypertension', 'heart_disease', 'smoking_status' ]]
+
+X = np.asarray(features_dataset.values)
+
+#Dependent variable
+
+y = np.asarray(dataset['stroke'].values)
 

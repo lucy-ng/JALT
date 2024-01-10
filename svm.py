@@ -14,3 +14,22 @@ from matplotlib.colors import ListedColormap
 dataset = pd.read_csv('healthcare-dataset-stroke-data.csv')
 print (dataset)
 
+stroke_dataset = dataset[dataset['stroke']==1]
+heart_dataset = dataset[dataset['stroke']==0]
+    
+axes = stroke_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', label='stroke', color = 'blue' )
+heart_dataset.plot(kind='scatter', x='bmi', y= 'avg_glucose_level', label='no stroke', color = 'pink', ax=axes )
+
+stroke1_dataset = dataset[dataset['stroke']==1]
+heart1_dataset = dataset[dataset['stroke']==0]
+
+axes = stroke1_dataset.plot(kind='kde', x='heart_disease', y= 'hypertension', label='stroke', color='pink' )
+heart1_dataset.plot(kind='kde', x='heart_disease', y= 'hypertension', label='no stroke', ax=axes, color='blue' )
+
+stroke2_dataset = dataset[dataset['stroke']==1]
+heart2_dataset = dataset[dataset['stroke']==0]
+
+axes = stroke2_dataset.plot(kind='density', x='hypertension', y= 'age', label='stroke', color = 'pink' )
+heart2_dataset.plot(kind='density', x='hypertension', y= 'age', label='no stroke', color = 'blue', ax=axes )
+
+

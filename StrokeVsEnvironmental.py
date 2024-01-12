@@ -14,39 +14,42 @@ data = pd.read_csv('healthcare-dataset-stroke-data.csv')
 # filter data by those who had stroke 
 stroke = data[data['stroke'] == 1]
 
+
 #function to draw the graphs
-def draw_graph(stroke, s1, s2, s3):
-    if(stroke):
-        holder = stroke[s1].value_counts()
-    else:
-        holder = data[s1].value_counts()
-    holder.plot(kind='pie', autopct='%1.1f%%')
+def draw_graph(s2, s3):
     plt.title(s2)
     plt.xlabel(s3)
     plt.ylabel('')
     plt.show()
+    
+def stroke_graph(s1, s2, s3):
+    holder = stroke[s1].value_counts()
+    holder.plot(kind='pie', autopct='%1.1f%%')
+    draw_graph(s2, s3)
+    
+def nonstroke_graph(s1, s2, s3):
+    holder = data[s1].value_counts()
+    holder.plot(kind='pie', autopct='%1.1f%%')
+    draw_graph(s2, s3)
 
 # stroke vs marriage situation
-draw_graph(False, 'ever_married', '% of strokes by the Married', 'Married?')
+stroke_graph('ever_married', '% of strokes by the Married', 'Married?')
 # Overall marriage situation
-draw_graph(False, 'ever_married', '% of Married people', 'Married?')
-
-
-
+nonstroke_graph('ever_married', '% of Married people', 'Married?')
 
 # stroke vs residence situation
-draw_graph(True, 'Residence_type', '% of strokes by Urban people', 'Residence Type')
+stroke_graph('Residence_type', '% of strokes by Urban people', 'Residence Type')
 # Overall residence situation
-draw_graph(False, 'Residence_type', '% of Urban people', 'Residence Type')
+nonstroke_graph('Residence_type', '% of Urban people', 'Residence Type')
 
 
 
 # figure out how to keep colours consistent for both graphs
 
 # stroke vs work situation
-draw_graph(True, 'work_type', '% of strokes by work type', 'Work Type')
+stroke_graph('work_type', '% of strokes by work type', 'Work Type')
 # Overall work situation
-draw_graph(False, 'work_type', '% of people by work type', 'Work Type')
+nonstroke_graph('work_type', '% of people by work type', 'Work Type')
 
 
 

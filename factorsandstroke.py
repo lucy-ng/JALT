@@ -7,7 +7,7 @@ Created on Wed Dec  6 21:14:50 2023
 """
 # =============================================================================
 # Analysis 
-#   Hear_disease coefficient is positive and around 0.07, this indicates that 
+#   Heart_disease coefficient is positive and around 0.07, this indicates that 
 # there is a positive relationship between the presence of heart disease and
 # stroke occurrences.
 #   Hypertension coefficient is positive and around 0.04,
@@ -15,10 +15,10 @@ Created on Wed Dec  6 21:14:50 2023
 #probability of stroke occurrences. The coefficient value, although positive, 
 # is somewhat smaller than that of heart_disease, indicating a lesser impact 
 # but still a noticeable influence.
-#   Age coefficient is positive but close to 0, this suggests thar there is 
+#   Age coefficient is positive but close to 0, this suggests that there is 
 # a minimal relationship between age and stroke. This model indicates that age 
 # has the least influence among other factors on the likelihood of stroke occurrences. 
-# Overall, accordign to linear regression model heart disease has a relatively 
+# Overall, according to linear regression model heart disease has a relatively 
 # stronger relationship with stroke occurences. 
 # =============================================================================
 

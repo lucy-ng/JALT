@@ -25,7 +25,7 @@ stroke = data[data['stroke'] == 1]
 # count the occurrences of stroke for each gender
 gender = stroke['gender'].value_counts()
 
-# Represent result the result
+# Represent the result
 gender.plot(kind='pie', autopct='%1.1f%%')
 plt.title('Number of Men and Women who had a Stroke')
 plt.xlabel('Gender')

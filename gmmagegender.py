@@ -8,7 +8,7 @@ Created on Thu Dec 21 18:54:39 2023
 
 # AGE vs Gender for Stroke
 # Count average age  for female and male who had stroke
-# Average female age at having storoke is 67
+# Average female age at having stroke is 67
 # Averaege male age of having stroke is 68
 #
 #

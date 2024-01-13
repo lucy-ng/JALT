@@ -15,42 +15,46 @@ data = pd.read_csv('healthcare-dataset-stroke-data.csv')
 stroke = data[data['stroke'] == 1]
 
 
-#function to draw the graphs
-def draw_graph(s2, s3):
+#function to draw the graphs    
+def draw_graph(data, s1, s2, s3):
+    holder = data[s1].value_counts()
+    holder.plot(kind='pie', autopct='%1.1f%%')
     plt.title(s2)
     plt.xlabel(s3)
     plt.ylabel('')
     plt.show()
     
-def stroke_graph(s1, s2, s3):
-    holder = stroke[s1].value_counts()
-    holder.plot(kind='pie', autopct='%1.1f%%')
-    draw_graph(s2, s3)
-    
-def nonstroke_graph(s1, s2, s3):
-    holder = data[s1].value_counts()
-    holder.plot(kind='pie', autopct='%1.1f%%')
-    draw_graph(s2, s3)
 
 # stroke vs marriage situation
-stroke_graph('ever_married', '% of strokes by the Married', 'Married?')
+draw_graph(stroke, 'ever_married', '% of strokes by the Married', 'Married?')
 # Overall marriage situation
-nonstroke_graph('ever_married', '% of Married people', 'Married?')
+draw_graph(data, 'ever_married', '% of Married people', 'Married?')
 
 # stroke vs residence situation
-stroke_graph('Residence_type', '% of strokes by Urban people', 'Residence Type')
+draw_graph(stroke, 'Residence_type', '% of strokes by Urban people', 'Residence Type')
 # Overall residence situation
-nonstroke_graph('Residence_type', '% of Urban people', 'Residence Type')
+draw_graph(data, 'Residence_type', '% of Urban people', 'Residence Type')
 
 
 
 # figure out how to keep colours consistent for both graphs
 
 # stroke vs work situation
-stroke_graph('work_type', '% of strokes by work type', 'Work Type')
+draw_graph(stroke, 'work_type', '% of strokes by work type', 'Work Type')
 # Overall work situation
-nonstroke_graph('work_type', '% of people by work type', 'Work Type')
+draw_graph(data, 'work_type', '% of people by work type', 'Work Type')
 
+
+
+# Children muddy the waters by being an outlier, here are the graphs with children removed
+# those who have never worked have also been removed, due to being so tiny a population and cluttering the data
+# Used for reference for the below:  https://www.geeksforgeeks.org/how-to-drop-rows-that-contain-a-specific-string-in-pandas/?ref=ml_lbp
+# temp stroke vs work excluding children
+exclusionStrokeWork = stroke[stroke["work_type"].str.contains("children|Never_worked") == False]
+draw_graph(exclusionStrokeWork, 'work_type', '% of strokes by work type of those who have worked', 'Work Type')
+# temp population of work excluding children
+exclusionWork = data[data["work_type"].str.contains("children|Never_worked") == False]
+draw_graph(exclusionWork, 'work_type', '% by work type of those who have worked', 'Work Type')
 
 
 

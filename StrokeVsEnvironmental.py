@@ -7,13 +7,16 @@ Created on Fri Jan 12 17:28:15 2024
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
-# load my data
+# load data
 data = pd.read_csv('healthcare-dataset-stroke-data.csv')
+
+
+#           Pie Charts
 
 # filter data by those who had stroke 
 stroke = data[data['stroke'] == 1]
-
 
 #function to draw the graphs    
 def draw_graph(data, s1, s2, s3):
@@ -23,7 +26,6 @@ def draw_graph(data, s1, s2, s3):
     plt.xlabel(s3)
     plt.ylabel('')
     plt.show()
-    
 
 # stroke vs marriage situation
 draw_graph(stroke, 'ever_married', '% of strokes by the Married', 'Married?')
@@ -35,26 +37,56 @@ draw_graph(stroke, 'Residence_type', '% of strokes by Urban people', 'Residence 
 # Overall residence situation
 draw_graph(data, 'Residence_type', '% of Urban people', 'Residence Type')
 
-
-
-# figure out how to keep colours consistent for both graphs
-
 # stroke vs work situation
 draw_graph(stroke, 'work_type', '% of strokes by work type', 'Work Type')
 # Overall work situation
 draw_graph(data, 'work_type', '% of people by work type', 'Work Type')
-
-
 
 # Children muddy the waters by being an outlier, here are the graphs with children removed
 # those who have never worked have also been removed, due to being so tiny a population and cluttering the data
 # Used for reference for the below:  https://www.geeksforgeeks.org/how-to-drop-rows-that-contain-a-specific-string-in-pandas/?ref=ml_lbp
 # temp stroke vs work excluding children
 exclusionStrokeWork = stroke[stroke["work_type"].str.contains("children|Never_worked") == False]
-draw_graph(exclusionStrokeWork, 'work_type', '% of strokes by work type of those who have worked', 'Work Type')
+draw_graph(exclusionStrokeWork, 'work_type', 'stroke% by workers', 'Work Type')
 # temp population of work excluding children
 exclusionWork = data[data["work_type"].str.contains("children|Never_worked") == False]
 draw_graph(exclusionWork, 'work_type', '% by work type of those who have worked', 'Work Type')
+
+
+#           Linear Regression
+
+# Altering of data is necessary to use them for Linear Regression
+# Convert the 3 environmental factors into integer booleans
+# specifically, we're comparing the factors of: 
+#           age (non environmental), being married, living in urban environments and being self-employed
+
+#   for marriage
+data['ever_married'] = data['ever_married'].replace(['Yes'], 1)
+data['ever_married'] = data['ever_married'].replace(['No'], 0)
+#   for residence
+data['Residence_type'] = data['Residence_type'].replace(['Urban'], 1)
+data['Residence_type'] = data['Residence_type'].replace(['Rural'], 0)
+#   for work type
+data['work_type'] = data['work_type'].replace(['Self-employed'], 1)
+data['work_type'] = data['work_type'].replace(['Private'], 0)
+data['work_type'] = data['work_type'].replace(['Govt_job'], 0)
+data['work_type'] = data['work_type'].replace(['children'], 0)
+data['work_type'] = data['work_type'].replace(['Never_worked'], 0)
+
+# Now with updated data, filter only the 4 columns we're interested in (the 3 above plus 'age') into the X axis, and stroke on the y
+features = ['age', 'ever_married', 'Residence_type', 'work_type']
+X = data[features]
+y = data['stroke']
+
+
+model = LinearRegression()
+model.fit(X, y)
+coefficients = model.coef_
+plt.figure(figsize=(5, 1)) 
+plt.barh(features, coefficients)
+plt.xlabel('Coefficient Value')
+plt.title('Linear Regression')
+plt.show()
 
 
 
